@@ -1,0 +1,26 @@
+-- Użytkownicy  
+CREATE TABLE users (  
+  id SERIAL PRIMARY KEY,  
+  email VARCHAR(255) UNIQUE NOT NULL,  
+  password_hash VARCHAR(255) NOT NULL,  
+  username VARCHAR(50),  
+  created_at TIMESTAMP DEFAULT NOW()  
+);  
+
+-- Fiszki  
+CREATE TABLE flashcards (  
+  id SERIAL PRIMARY KEY,  
+  word VARCHAR(100) NOT NULL,  
+  translation VARCHAR(100) NOT NULL,  
+  language VARCHAR(50) NOT NULL,  
+  difficulty INT DEFAULT 1  
+);  
+
+-- Postępy użytkowników  
+CREATE TABLE user_progress (  
+  user_id INT REFERENCES users(id),  
+  flashcard_id INT REFERENCES flashcards(id),  
+  last_reviewed DATE,  
+  score INT,  
+  PRIMARY KEY (user_id, flashcard_id)  
+);  
